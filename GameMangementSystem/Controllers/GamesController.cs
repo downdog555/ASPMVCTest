@@ -10,7 +10,7 @@ using GameMangementSystem.Context;
 using GameMangementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 namespace GameMangementSystem.Controllers
-{
+{ 
     [Authorize]
     public class GamesController : Controller
     {
