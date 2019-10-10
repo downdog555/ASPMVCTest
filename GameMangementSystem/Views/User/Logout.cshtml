@@ -1,0 +1,23 @@
+﻿@model GameMangementSystem.Models.User
+
+@{
+    ViewData["Title"] = "Logout - success";
+}
+
+<h2>Create</h2>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+       <h5>You have been successfully logged out. Please login again to access.</h5>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Login">Login</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
