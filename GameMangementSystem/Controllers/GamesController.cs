@@ -72,7 +72,7 @@ namespace GameMangementSystem.Controllers
         /// <returns>either redirect if correct or the page with the details submitted before</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Title,ReleaseData,Genre,Price")] Game game)
+        public async Task<IActionResult> Create([Bind("ID,Title,ReleaseDate,Genre,Price")] Game game)
         {
             if (ModelState.IsValid)
             {
@@ -114,7 +114,7 @@ namespace GameMangementSystem.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,ReleaseData,Genre,Price")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,ReleaseDate,Genre,Price")] Game game)
         {
             if (id != game.ID)
             {

@@ -57,6 +57,7 @@ namespace GameMangementSystem.Controllers
             }
             //if we do not find a user
             //load the view with the data previously entered but remove the password
+            ViewBag.error = "Incorrect Details";
             user.Password = "";
             return View(user);
         }
@@ -101,12 +102,23 @@ namespace GameMangementSystem.Controllers
             //if model is valid
             if (ModelState.IsValid)
             {
-                //add a new user
-                _context.Add(user);
-                // save the db changes
-                await _context.SaveChangesAsync();
-                //redirect to login page
-                return RedirectToAction(nameof(Login));
+                //check for user 
+                //select all entries
+                var us = from u in _context.Users select u;
+                //search entries for where username and password is found
+                us = us.Where(s => s.Username.Equals(user.Username));
+                // if there is only one there we can authentiacre
+                if (us.Count() == 0)
+                {
+                    //add a new user
+                    _context.Add(user);
+                    // save the db changes
+                    await _context.SaveChangesAsync();
+                    //redirect to login page
+                    return RedirectToAction(nameof(Login));
+                }
+                ViewBag.error = "Error: details are already entered";
+                return View(user);
             }
             //if not return to the view with entered data
             return View(user);
