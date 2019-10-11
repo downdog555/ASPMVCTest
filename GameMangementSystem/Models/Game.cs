@@ -22,8 +22,9 @@ namespace GameMangementSystem.Models
         [Required]
         public string Title { get; set; }
 
-        [Display(Name = "Release Date")]
+        [Display(Name = "Year Published")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString ="{0:yyyy}")]
         public DateTime ReleaseDate { get; set; }
         //Any number of charters which are - a-z A-Z or space
         [RegularExpression(@"[\-A-Za-z ]*")]
