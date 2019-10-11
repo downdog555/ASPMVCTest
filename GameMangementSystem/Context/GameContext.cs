@@ -14,5 +14,6 @@ namespace GameMangementSystem.Context
         }
 
         public DbSet<GameMangementSystem.Models.Game> Game { get; set; }
+        public DbSet<GameMangementSystem.Models.Users> Users { get; set; }
     }
 }

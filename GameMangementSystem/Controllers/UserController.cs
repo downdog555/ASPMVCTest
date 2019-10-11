@@ -17,11 +17,11 @@ namespace GameMangementSystem.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserContext _userContext;
+        private readonly GameContext _context;
 
-        public UserController(UserContext context)
+        public UserController(GameContext context)
         {
-            _userContext = context;
+            _context = context;
         }
 
         [HttpPost]
@@ -29,7 +29,7 @@ namespace GameMangementSystem.Controllers
         public async Task<IActionResult> Login([Bind("Username,Password")] Users user)
         {
             //verify here
-            var us = from u in _userContext.User select u;
+            var us = from u in _context.Users select u;
             us = us.Where(s => s.Username.Equals(user.Username)).Where(s => s.Password.Equals(user.Password));
             if (us.Count() == 1)
             {
@@ -43,8 +43,8 @@ namespace GameMangementSystem.Controllers
                    AllowRefresh =true,
                     IsPersistent = true
                 };
-                await HttpContext.SignInAsync( CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-                return RedirectToAction();
+                await HttpContext.SignInAsync( new ClaimsPrincipal(claimsIdentity), authProperties);
+                return Redirect("/games/");
             }
             user.Password = "";
             return View(user);
@@ -57,8 +57,8 @@ namespace GameMangementSystem.Controllers
         public async Task<IActionResult> Logout()
         {
 
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction(nameof(Login));
+            await HttpContext.SignOutAsync();
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -66,9 +66,9 @@ namespace GameMangementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                _userContext.Add(user);
-                await _userContext.SaveChangesAsync();
-                return RedirectToAction();
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Login));
             }
             return View(user);
         }

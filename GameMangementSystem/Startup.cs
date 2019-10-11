@@ -43,7 +43,7 @@ namespace GameMangementSystem
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<GameContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameContext")));
-            services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
+          
             services.AddAuthentication(CookieScheme).AddCookie(CookieScheme,options=> {
                 options.LoginPath = "/user/login";
 
