@@ -11,14 +11,14 @@ namespace GameMangementSystem.Models
     {
         public int ID { get; set; }
         [StringLength(60, MinimumLength = 3)]
-        [RegularExpression(@"/[A-Z &!\d]/gi")]
+        [RegularExpression(@"[\-A-Za-z &!\d]*")]
         [Required]
         public string Title { get; set; }
 
         [Display(Name = "Release Date")]
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
-        [RegularExpression(@"/[A-Z ]/gi")]
+        [RegularExpression(@"[\-A-Za-z ]*")]
         [Required]
         public string Genre { get; set; }
         [DataType(DataType.Currency)]
