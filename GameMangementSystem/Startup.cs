@@ -55,7 +55,7 @@ namespace GameMangementSystem
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
            
-           app.UseExceptionHandler("/Home/Error");
+           
            
 
             app.UseHttpsRedirection();
@@ -68,7 +68,7 @@ namespace GameMangementSystem
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=User}/{action=Login}/");
             });
         }
     }

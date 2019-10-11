@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Principal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using GameMangementSystem.Models;
 using GameMangementSystem.Context;
 using System.Security.Claims;
@@ -44,7 +40,8 @@ namespace GameMangementSystem.Controllers
                     IsPersistent = true
                 };
                 await HttpContext.SignInAsync( new ClaimsPrincipal(claimsIdentity), authProperties);
-                return Redirect("/games/");
+              
+                return Redirect("/Games/Index");
             }
             user.Password = "";
             return View(user);
@@ -56,10 +53,14 @@ namespace GameMangementSystem.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-
             await HttpContext.SignOutAsync();
+           return Redirect("/User/LogoutSuccess");
+        }
+        public IActionResult LogoutSuccess()
+        {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("Username,Password")] Users user)
