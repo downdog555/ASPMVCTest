@@ -26,7 +26,7 @@ namespace GameMangementSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Bind("Username,Password")] User user)
+        public async Task<IActionResult> Login([Bind("Username,Password")] Users user)
         {
             //verify here
             var us = from u in _userContext.User select u;
@@ -62,7 +62,7 @@ namespace GameMangementSystem.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Username,Password")] User user)
+        public async Task<IActionResult> Register([Bind("Username,Password")] Users user)
         {
             if (ModelState.IsValid)
             {

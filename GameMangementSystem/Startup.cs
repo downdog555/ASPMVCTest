@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using GameMangementSystem.Context;
 using System.Security.AccessControl;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace GameMangementSystem
@@ -20,6 +21,7 @@ namespace GameMangementSystem
 
     public class Startup
     {
+        public const string CookieScheme = "BasicCookie";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,11 +42,12 @@ namespace GameMangementSystem
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<GameContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("GameContext")));
-            services.AddDbContext<UserContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddDbContext<GameContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GameContext")));
+            services.AddDbContext<UserContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
+            services.AddAuthentication(CookieScheme).AddCookie(CookieScheme,options=> {
+                options.LoginPath = "/user/login";
+
+            });
        
         }
 
@@ -59,7 +62,7 @@ namespace GameMangementSystem
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-          
+            
 
             app.UseMvc(routes =>
             {

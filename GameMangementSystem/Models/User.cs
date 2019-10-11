@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GameMangementSystem.Models
 {
-    public class User
+    public class Users
     {
         public int ID { get; set; }
         public string Username { get; set; }
